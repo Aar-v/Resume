@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Resume — Full Stack</title>
+
+    <!-- Color tokens (matches your provided palette) -->
+    <style>
+      :root {
+        --blue-med: #0078ac;
+        --blue-light: #a2dedf;
+        --yellow: #f7be00;
+        --grey-light: #e4e4ec;
+        --blue-deep: #0c587a;
+        --blue-dark: #0d394e;
+        --blue-darker: #073763;
+        --blue-soft: #86bdef;
+        --bg-dark: #0b243b;
+        --bg-blackish: #061524;
+
+        --container-max: 1100px;
+        --radius: 12px;
+        --shadow-soft: 0 6px 18px rgba(11, 38, 59, 0.06);
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+          Roboto, "Helvetica Neue", Arial;
+      }
+
+      /* Basic baseline so index.html looks pleasant before React loads */
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        background: linear-gradient(180deg, #f8fbfd 0%, #ffffff 100%);
+        color: #0b243b;
+      }
+      .app-shell {
+        max-width: var(--container-max);
+        margin: 24px auto;
+        padding: 0 16px;
+      }
+      .amazon-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: var(--blue-med);
+        color: white;
+        padding: 14px;
+        border-radius: 10px;
+        box-shadow: var(--shadow-soft);
+      }
+      .site-brand {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        font-weight: 800;
+        font-size: 20px;
+      }
+      .search-pill {
+        display: flex;
+        align-items: center;
+        background: var(--blue-light);
+        padding: 6px;
+        border-radius: 999px;
+      }
+      .search-pill input {
+        border: 0;
+        background: transparent;
+        outline: none;
+        padding: 8px 10px;
+        font-size: 14px;
+        color: var(--blue-darker);
+      }
+      .cta-btn {
+        background: var(--yellow);
+        color: #031b23;
+        padding: 8px 12px;
+        border-radius: 8px;
+        font-weight: 700;
+        border: 0;
+        cursor: pointer;
+      }
+      .card {
+        background: #fff;
+        border-radius: 10px;
+        padding: 16px;
+        box-shadow: var(--shadow-soft);
+      }
+      .grid-2 {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+      }
+      @media (max-width: 900px) {
+        .grid-2 {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+
+    <!-- For development with Vite the PostCSS/Tailwind CSS build will inject compiled CSS.
+         If you prefer the CDN quick-start, uncomment the line below (not recommended for production).
+    -->
+    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
+
+    <link rel="icon" href="/favicon.ico" />
+  </head>
+
+  <body>
+    <!-- Minimal skeleton shown before React hydrates -->
+    <div class="app-shell" id="shell">
+      <header class="amazon-header" role="banner" aria-label="Top header">
+        <div class="site-brand" aria-hidden="true">
+          <div
+            style="
+              width: 36px;
+              height: 36px;
+              border-radius: 6px;
+              background: var(--yellow);
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              color: #031b23;
+              font-weight: 900;
+            "
+          >
+            A
+          </div>
+          <div>A-Resume</div>
+        </div>
+
+        <div
+          style="
+            flex: 1;
+            margin: 0 16px;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+          "
+        >
+          <div class="search-pill" style="flex: 1; min-width: 220px">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              style="width: 18px; height: 18px; margin-left: 8px; opacity: 0.7"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+            >
+              <path
+                d="M21 21l-4.35-4.35"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+            <input
+              aria-label="Search resume content"
+              placeholder="Search sections, skills, projects..."
+            />
+          </div>
+
+          <nav style="display: flex; gap: 10px; align-items: center">
+            <a
+              href="#education"
+              style="color: white; text-decoration: none; font-weight: 600"
+              >Education</a
+            >
+            <a
+              href="#projects"
+              style="color: white; text-decoration: none; font-weight: 600"
+              >Projects</a
+            >
+            <button
+              id="downloadShellBtn"
+              class="cta-btn"
+              title="Download resume PDF"
+            >
+              Download
+            </button>
+          </nav>
+        </div>
+      </header>
+
+      <!-- Preview main content to avoid blank flash -->
+      <main
+        style="
+          margin-top: 18px;
+          display: grid;
+          grid-template-columns: 2fr 1fr;
+          gap: 18px;
+        "
+      >
+        <section style="min-height: 320px">
+          <div class="card">
+            <h1
+              id="shellName"
+              style="margin: 0; font-size: 20px; font-weight: 800"
+            >
+              Your Name
+            </h1>
+            <p id="shellTitle" style="margin: 6px 0; color: var(--blue-deep)">
+              Full Stack Developer
+            </p>
+            <p id="shellSummary" style="color: #2b4757; line-height: 1.5">
+              Loading summary…
+            </p>
+          </div>
+
+          <div style="margin-top: 14px" class="grid-2">
+            <div class="card" id="shellEducation">
+              <strong>Education</strong>
+              <div style="margin-top: 8px; color: #4b5b66">Loading…</div>
+            </div>
+
+            <div class="card" id="shellProjects">
+              <strong>Projects</strong>
+              <div style="margin-top: 8px; color: #4b5b66">Loading…</div>
+            </div>
+
+            <div class="card" id="shellExperience">
+              <strong>Experience</strong>
+              <div style="margin-top: 8px; color: #4b5b66">Loading…</div>
+            </div>
+
+            <div class="card" id="shellTimeline">
+              <strong>Timeline</strong>
+              <div style="margin-top: 8px; color: #4b5b66">Loading…</div>
+            </div>
+          </div>
+        </section>
+
+        <aside>
+          <div class="card">
+            <strong>Contact</strong>
+            <div id="shellContact" style="margin-top: 6px; color: #4b5b66">
+              contact@you.com
+            </div>
+          </div>
+
+          <div class="card" style="margin-top: 12px">
+            <strong>Tech Stack</strong>
+            <div
+              id="shellTech"
+              style="margin-top: 8px; display: flex; flex-wrap: wrap; gap: 6px"
+            >
+              <span
+                style="
+                  background: var(--grey-light);
+                  padding: 6px 10px;
+                  border-radius: 999px;
+                  font-size: 13px;
+                "
+                >React</span
+              >
+            </div>
+          </div>
+
+          <div class="card" style="margin-top: 12px">
+            <strong>Quick Actions</strong>
+            <div style="margin-top: 8px; display: flex; gap: 8px">
+              <button class="cta-btn" id="shellRefresh">Refresh</button>
+            </div>
+          </div>
+        </aside>
+      </main>
+    </div>
+
+    <!-- Vite + React entry point (modular frontend) -->
+    <!-- main.jsx will mount the React app into #root (replace shell or hydrate) -->
+    <div id="root"></div>
+
+    <!-- Provide environment hint: set VITE_API_BASE in frontend .env when running dev/build.
+         Example .env: VITE_API_BASE=http://localhost:4000
+    -->
+
+    <script type="module">
+      // If user hasn't yet built the React app, keep the shell interactive:
+      // These small helpers call the backend if available and populate the shell.
+      (function () {
+        const API_BASE =
+          import.meta.env && import.meta.env.VITE_API_BASE
+            ? import.meta.env.VITE_API_BASE
+            : "http://localhost:4000";
+        async function fillShell() {
+          try {
+            const r = await fetch(`${API_BASE}/api/resume`);
+            if (!r.ok) return;
+            const data = await r.json();
+
+            document.getElementById("shellName").textContent =
+              data.name || "Your Name";
+            document.getElementById("shellTitle").textContent =
+              data.title || "";
+            document.getElementById("shellSummary").textContent =
+              data.summary || "";
+            document.getElementById("shellContact").textContent =
+              data.contact || "";
+            // simple education render
+            const ed = document.getElementById("shellEducation");
+            ed.innerHTML = "<strong>Education</strong>";
+            (data.education || []).slice(0, 3).forEach((e) => {
+              const div = document.createElement("div");
+              div.style.marginTop = "8px";
+              div.style.color = "#4b5b66";
+              div.innerHTML = `<div style="font-weight:700">${
+                e.degree || e.school || ""
+              }</div><div style="font-size:13px">${
+                e.school || e.institution || ""
+              } • ${e.year || ""}</div>`;
+              ed.appendChild(div);
+            });
+
+            // Projects
+            const pj = document.getElementById("shellProjects");
+            pj.innerHTML = "<strong>Projects</strong>";
+            (data.projects || []).slice(0, 3).forEach((p) => {
+              const div = document.createElement("div");
+              div.style.marginTop = "8px";
+              div.style.color = "#4b5b66";
+              div.innerHTML = `<div style="font-weight:700">${
+                p.title || p.name
+              }</div><div style="font-size:13px">${
+                p.description || p.desc || ""
+              }</div>`;
+              pj.appendChild(div);
+            });
+
+            // Timeline
+            const t = document.getElementById("shellTimeline");
+            t.innerHTML = "<strong>Timeline</strong>";
+            (data.timeline || []).slice(0, 4).forEach((it) => {
+              const div = document.createElement("div");
+              div.style.marginTop = "8px";
+              div.style.color = "#4b5b66";
+              div.innerHTML = `<div style="font-weight:700">${it.year}</div><div style="font-size:13px">${it.event}</div>`;
+              t.appendChild(div);
+            });
+
+            // Tech stack
+            const tech = document.getElementById("shellTech");
+            tech.innerHTML = "";
+            (data.techstack || []).slice(0, 8).forEach((s) => {
+              const sp = document.createElement("span");
+              sp.style.background = "var(--grey-light)";
+              sp.style.padding = "6px 10px";
+              sp.style.borderRadius = "999px";
+              sp.style.fontSize = "13px";
+              sp.textContent = s;
+              tech.appendChild(sp);
+            });
+
+            // Bind Download button
+            const downloadBtn = document.getElementById("downloadShellBtn");
+            downloadBtn.onclick = () => {
+              const pdfUrl = data.pdfUrl
+                ? API_BASE + data.pdfUrl
+                : API_BASE + "/api/resume.pdf";
+              window.open(pdfUrl, "_blank");
+            };
+
+            document.getElementById("shellRefresh").onclick = fillShell;
+          } catch (err) {
+            // silent - backend not up yet
+          }
+        }
+        // try to populate shell; React app will mount into #root later
+        fillShell();
+      })();
+    </script>
+
+    <!-- Vite entry - your React app should import index.css (Tailwind) and mount to #root -->
+    <script type="module" src="/src/main.jsx"></script>
+
+    <noscript>
+      <div
+        style="
+          max-width: var(--container-max);
+          margin: 18px auto;
+          padding: 12px;
+          background: #fff;
+          border-radius: 10px;
+          text-align: center;
+        "
+      >
+        JavaScript is required to run this site. Please enable JavaScript or use
+        a compatible browser.
+      </div>
+    </noscript>
+  </body>
+</html>
