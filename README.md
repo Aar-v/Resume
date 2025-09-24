@@ -39,31 +39,31 @@ You can also upload and serve a **downloadable PDF version** of your resume.
 
 ## 📂 Project Structure
 
-project-root/
-│
-├── backend/ # Spring Boot backend
-│ ├── src/main/java/com/resumeapp/
-│ │ ├── controller/ # REST controllers
-│ │ ├── model/ # Data models
-│ │ ├── repository/ # DB repositories
-│ │ ├── service/ # Business logic
-│ │ └── ResumeAppApplication.java
-│ └── src/main/resources/
-│ ├── application.properties
-│ └── static/resume.pdf # downloadable PDF
-│
-├── frontend/ # React + Vite + Tailwind frontend
-│ ├── index.html # App shell
-│ ├── src/
-│ │ ├── App.jsx
-│ │ ├── main.jsx
-│ │ ├── components/ # Header, Card, Timeline, etc.
-│ │ └── services/api.js # API integration
-│ └── tailwind.config.js
-│
-├── docker-compose.yml # Run frontend + backend together
-├── README.md # Project documentation
-└── LICENSE # (optional) License file
+-project-root/
+-│
+-├── backend/ # Spring Boot backend
+-│ ├── src/main/java/com/resumeapp/
+-│ │ ├── controller/ # REST controllers
+-│ │ ├── model/ # Data models
+-│ │ ├── repository/ # DB repositories
+-│ │ ├── service/ # Business logic
+-│ │ └── ResumeAppApplication.java
+-│ └── src/main/resources/
+-│ ├── application.properties
+-│ └── static/resume.pdf # downloadable PDF
+-│
+-├── frontend/ # React + Vite + Tailwind frontend
+-│ ├── index.html # App shell
+-│ ├── src/
+-│ │ ├── App.jsx
+-│ │ ├── main.jsx
+-│ │ ├── components/ # Header, Card, Timeline, etc.
+-│ │ └── services/api.js # API integration
+-│ └── tailwind.config.js
+-│
+-├── docker-compose.yml # Run frontend + backend together
+-├── README.md # Project documentation
+-└── LICENSE # (optional) License file
 
 ---
 
