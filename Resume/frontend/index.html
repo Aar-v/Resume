@@ -1,13 +1,199 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>frontend</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Resume — Full Stack</title>
+
+    <!-- 🎨 Added inline styles with your chosen color scheme -->
+    <style>
+      :root {
+        --blue-med: #0078ac;
+        --blue-light: #a2dedf;
+        --yellow: #f7be00;
+        --grey-light: #e4e4ec;
+        --blue-deep: #0c587a;
+        --blue-dark: #0d394e;
+        --bg-blackish: #061524;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+          Roboto, "Helvetica Neue", Arial;
+      }
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        background: linear-gradient(180deg, #f8fbfd 0%, #ffffff 100%);
+        color: #0b243b;
+      }
+      /* 💡 Shell styles to mimic Amazon-like header + card feel */
+      .app-shell {
+        max-width: 1100px;
+        margin: 20px auto;
+        padding: 0 16px;
+      }
+      .amazon-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: var(--blue-med);
+        color: white;
+        padding: 14px;
+        border-radius: 10px;
+      }
+      .search-pill {
+        display: flex;
+        align-items: center;
+        background: var(--blue-light);
+        padding: 6px;
+        border-radius: 999px;
+      }
+      .search-pill input {
+        border: 0;
+        background: transparent;
+        outline: none;
+        padding: 8px 10px;
+        font-size: 14px;
+        color: var(--blue-darker);
+      }
+      .cta-btn {
+        background: var(--yellow);
+        color: #031b23;
+        padding: 8px 12px;
+        border-radius: 8px;
+        font-weight: 700;
+        border: 0;
+        cursor: pointer;
+      }
+    </style>
   </head>
+
   <body>
+    <!-- ⚡ Lightweight static shell shown before React loads -->
+    <div class="app-shell" id="shell">
+      <header class="amazon-header" role="banner">
+        <!-- 📌 Left logo area -->
+        <div style="display: flex; align-items: center; gap: 12px">
+          <div
+            style="
+              width: 36px;
+              height: 36px;
+              border-radius: 6px;
+              background: var(--yellow);
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              color: #031b23;
+              font-weight: 900;
+            "
+          >
+            A
+          </div>
+          <div style="font-weight: 800">A-Resume</div>
+        </div>
+
+        <!-- 🔍 Search + download button -->
+        <div
+          style="
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex: 1;
+            margin-left: 24px;
+          "
+        >
+          <div class="search-pill" style="flex: 1; min-width: 220px">
+            <input placeholder="Search sections, skills, projects..." />
+          </div>
+          <button id="downloadShellBtn" class="cta-btn">Download</button>
+        </div>
+      </header>
+
+      <!-- 📌 Placeholder cards before React mounts -->
+      <main
+        style="
+          margin-top: 18px;
+          display: grid;
+          grid-template-columns: 2fr 1fr;
+          gap: 18px;
+        "
+      >
+        <section>
+          <div style="background: #fff; padding: 16px; border-radius: 10px">
+            <h1 id="shellName">Your Name</h1>
+            <p id="shellTitle">Full Stack Developer</p>
+            <p id="shellSummary">Loading summary…</p>
+          </div>
+          <!-- 🔧 Shell placeholders for main sections -->
+          <div
+            style="
+              margin-top: 14px;
+              display: grid;
+              grid-template-columns: repeat(2, 1fr);
+              gap: 12px;
+            "
+          >
+            <div id="shellEducation">Education — Loading…</div>
+            <div id="shellProjects">Projects — Loading…</div>
+            <div id="shellExperience">Experience — Loading…</div>
+            <div id="shellTimeline">Timeline — Loading…</div>
+          </div>
+        </section>
+
+        <!-- 📌 Sidebar placeholders -->
+        <aside style="display: flex; flex-direction: column; gap: 12px">
+          <div>Contact — <span id="shellContact">contact@you.com</span></div>
+          <div>
+            Tech Stack —
+            <div id="shellTech"></div>
+          </div>
+        </aside>
+      </main>
+    </div>
+
+    <!-- 🎯 React root (real app replaces above shell) -->
     <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
+
+    <!-- ⚙️ Script to hydrate shell from backend until React takes over -->
+    <script type="module">
+      (function () {
+        const API_BASE = "http://localhost:4000"; // 👉 backend Spring Boot
+        async function fillShell() {
+          try {
+            const res = await fetch(`${API_BASE}/api/resume`);
+            if (!res.ok) return;
+            const data = await res.json();
+
+            // 🔧 Fill placeholders with backend data
+            document.getElementById("shellName").textContent = data.name;
+            document.getElementById("shellTitle").textContent = data.title;
+            document.getElementById("shellSummary").textContent = data.summary;
+            document.getElementById("shellContact").textContent = data.contact;
+
+            // 📌 Build education cards
+            const ed = document.getElementById("shellEducation");
+            ed.innerHTML = "<strong>Education</strong>";
+            (data.education || []).forEach((e) => {
+              const d = document.createElement("div");
+              d.innerHTML = `<b>${e.degree}</b> — ${e.school} (${e.year})`;
+              ed.appendChild(d);
+            });
+
+            // 📥 Hook up download button
+            document.getElementById("downloadShellBtn").onclick = () => {
+              const pdfUrl = data.pdfUrl
+                ? API_BASE + data.pdfUrl
+                : API_BASE + "/api/resume.pdf";
+              window.open(pdfUrl, "_blank");
+            };
+          } catch (e) {
+            /* ignore if backend not up */
+          }
+        }
+        fillShell();
+      })();
+    </script>
+
+    <!-- 📌 React entry (Vite build injects here) -->
+    <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
