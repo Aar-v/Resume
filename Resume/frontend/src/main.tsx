@@ -1,9 +1,10 @@
-// frontend/src/main.jsx
 import React from "react";
-import { createRoot } from "react-dom/client";
+import ReactDOM from "react-dom/client";
 import App from "./App";
-import "./index.css"; // Tailwind / global styles (set up tailwind separately)
+import "./styles/styles.css";
 
-const rootEl = document.getElementById("root");
-const root = createRoot(rootEl);
-root.render(<App />);
+ReactDOM.createRoot(document.getElementById("root")).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);

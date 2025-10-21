@@ -1,18 +1,35 @@
-// frontend/src/components/Card.jsx
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 
-const Card = ({ title, children, icon: Icon }) => {
+const Card = ({ title, content }) => {
+  const [expanded, setExpanded] = useState(false);
+
   return (
     <motion.div
-      className="bg-white shadow-md hover:shadow-xl transition-shadow duration-300 rounded-2xl p-6 border border-gray-200 flex flex-col gap-4 cursor-pointer"
-      whileHover={{ scale: 1.02 }}
-      whileTap={{ scale: 0.98 }}
+      className="card"
+      onClick={() => setExpanded(!expanded)}
+      initial={{ rotateY: 0, scale: 1 }}
+      animate={{
+        rotateY: expanded ? 180 : 0,
+        scale: expanded ? 1.1 : 1,
+      }}
+      transition={{ duration: 0.6, type: "spring" }}
     >
-      <div className="flex items-center gap-3 border-b pb-2">
-        {Icon && <Icon className="text-[#0078ac] w-6 h-6" />}
-        <h2 className="text-lg font-semibold text-[#0d394e]">{title}</h2>
-      </div>
-      <div className="text-sm text-gray-700 leading-relaxed">{children}</div>
+      {!expanded ? (
+        <div className="card-front">
+          <h2>{title}</h2>
+        </div>
+      ) : (
+        <motion.div
+          className="card-back"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.2 }}
+        >
+          <h2>{title}</h2>
+          <p>{content}</p>
+        </motion.div>
+      )}
     </motion.div>
   );
 };
