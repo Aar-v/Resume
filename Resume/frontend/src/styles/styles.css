@@ -66,6 +66,56 @@ body {
 
 /* Hover glow */
 .card:hover {
-  box-shadow: 0 6px 15px #e4e4ec;
-  transition: box-shadow 0.3s ease;
+  background-color: #0078ac; /* medium blue */
+  color: white;
+  transform: scale(1.05);
+  box-shadow: 0 4px 10px #0c587a;
+}
+
+/* old styling */
+/* .card-2 { */
+/* perspective: 1000px; */
+/* cursor: pointer; */
+/* height: auto; */
+/* padding: 5px 5px; */
+/* border-radius: 16px; */
+/* box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); */
+/* transform-style: preserve-3d; */
+/* background-color: #44d9df; */
+/* } */
+
+/* Container for Tech Stack */
+.card-grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 12px;
+  margin-top: 10px;
+}
+
+/* Each card */
+.card-2 {
+  background-color: #a2dedf; /* light blue */
+  color: #0d394e; /* dark blue text */
+  border-radius: 12px;
+  padding: 10px 0;
+  text-align: center;
+  font-weight: 600;
+  box-shadow: 0 2px 5px #e4e4ec;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+/* Hover effect */
+.card-2:hover {
+  background-color: #0078ac; /* medium blue */
+  color: white;
+  transform: scale(1.05);
+  box-shadow: 0 4px 10px #0c587a;
+}
+
+/* Optional responsive tweaks */
+@media (max-width: 600px) {
+  .card-grid-container {
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  }
 }
