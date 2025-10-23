@@ -85,30 +85,62 @@ body {
 /* } */
 
 /* Container for Tech Stack */
+/* .card-grid-container { */
+/* display: grid; */
+/* grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); */
+/* gap: 12px; */
+/* margin-top: 10px; */
+/* } */
+
+/* Each card */
+/* .card-2 { */
+/* background-color: #a2dedf; light blue */
+/* color: #0d394e; dark blue text */
+/* border-radius: 12px; */
+/* padding: 10px 0; */
+/* text-align: center; */
+/* font-weight: 600; */
+/* box-shadow: 0 2px 5px #e4e4ec; */
+/* transition: all 0.3s ease; */
+/* cursor: pointer; */
+/* } */
+/*  */
+/* Hover effect */
+/* .card-2:hover { */
+/* background-color: #0078ac; medium blue */
+/* color: white; */
+/* transform: scale(1.05); */
+/* box-shadow: 0 4px 10px #0c587a; */
+/* } */
+
+/* Flex layout for tech stack cards */
 .card-grid-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  gap: 12px;
+  display: flex; /* Enables horizontal layout */
+  flex-wrap: wrap; /* Allows items to wrap to next line */
+  justify-content: flex-start; /* Aligns items from left to right */
+  align-items: center;
+  gap: 12px; /* Space between cards */
   margin-top: 10px;
 }
 
-/* Each card */
+/* Individual cards */
 .card-2 {
   background-color: #a2dedf; /* light blue */
   color: #0d394e; /* dark blue text */
   border-radius: 12px;
-  padding: 10px 0;
-  text-align: center;
+  width: auto;
+  padding: 8px 16px;
   font-weight: 600;
   box-shadow: 0 2px 5px #e4e4ec;
   transition: all 0.3s ease;
   cursor: pointer;
+  white-space: nowrap; /* keep each tech name in one line */
 }
 
 /* Hover effect */
 .card-2:hover {
   background-color: #0078ac; /* medium blue */
-  color: white;
+  color: #fff;
   transform: scale(1.05);
   box-shadow: 0 4px 10px #0c587a;
 }
